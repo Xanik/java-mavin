@@ -1,3 +1,8 @@
+def buildApp() {
+    echo 'building the application...'
+    echo "building version ${NEW_VERSION}"
+}
+
 def buildJar() {
     echo 'building the application...'
     sh 'mvn package'

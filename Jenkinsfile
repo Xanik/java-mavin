@@ -10,11 +10,15 @@ pipeline {
         booleanParam(name:'executeTests', defaultValue: true, description:'')
     }
     stages {
+        stage("init") {
+            script {
+                gv = load "script.groovy"
+            }
+        }
         stage("build") {
             steps {
                 script {
-                    echo 'building the application...'
-                    echo "building version ${NEW_VERSION}"
+                    gv.buildApp()
                 }
             }
         }
@@ -31,10 +35,16 @@ pipeline {
             }
         }
         stage("deploy") {
+            message "Select environment to deploy to"
+            ok "Done"
+            parameters {
+                    choice(name: 'ENV', choices: ['dev', 'staging', 'production'], description:'')
+            }
              steps {
                 script {
                     echo 'deploying the application...'
                     echo "deploying version ${params.VERSION}"
+                    echo "deploying to ${ENV}"
 //                     withCredentials([
 //                         usernamePassword(credentials: 'docker-hub', usernameVariable: USER, passwordVariable: PWD)
 //                     ]) {
