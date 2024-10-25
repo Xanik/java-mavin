@@ -2,6 +2,9 @@ def gv
 
 pipeline {   
     agent any
+    tools {
+    maven 'maven-3.9'
+    }
     environment {
         NEW_VERSION = '1.3.0'
     }
@@ -17,10 +20,10 @@ pipeline {
                 }
             }
         }
-        stage("build") {
+        stage("build jar") {
             steps {
                 script {
-                    gv.buildApp()
+                    gv.buildJar()
                 }
             }
         }
@@ -36,6 +39,13 @@ pipeline {
                 }
             }
         }
+        stage("build image") {
+            steps {
+                script {
+                    gv.buildImage()
+                }
+            }
+        }
         stage("deploy") {
              steps {
                 script {
@@ -43,11 +53,11 @@ pipeline {
                     echo 'deploying the application...'
                     echo "deploying version ${params.VERSION}"
                     echo "deploying to ${ENV}"
-//                     withCredentials([
-//                         usernamePassword(credentials: 'docker-hub', usernameVariable: USER, passwordVariable: PWD)
-//                     ]) {
-//                         sh "some script ${USER} ${PWD}"
-//                     }
+                    withCredentials([
+                        usernamePassword(credentials: 'docker-hub', usernameVariable: 'USER', passwordVariable: 'PWD')
+                    ]) {
+                        sh "some script ${USER} ${PWD}"
+                    }
                 }
             }
         }
