@@ -35,11 +35,13 @@ pipeline {
             }
         }
         stage("deploy") {
-            message "Select environment to deploy to"
-            ok "Done"
-            parameters {
-                    choice(name: 'ENV', choices: ['dev', 'staging', 'production'], description:'')
-            }
+             input {
+                message "Select environment to deploy to"
+                ok "Done"
+                parameters {
+                        choice(name: 'ENV', choices: ['dev', 'staging', 'production'], description:'')
+                }
+             }
              steps {
                 script {
                     echo 'deploying the application...'
