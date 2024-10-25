@@ -53,11 +53,6 @@ pipeline {
                     echo 'deploying the application...'
                     echo "deploying version ${params.VERSION}"
                     echo "deploying to ${ENV}"
-                    withCredentials([
-                        usernamePassword(credentials: 'docker-hub', usernameVariable: 'USER', passwordVariable: 'PWD')
-                    ]) {
-                        sh "some script ${USER} ${PWD}"
-                    }
                 }
             }
         }
