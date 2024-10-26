@@ -1,3 +1,5 @@
+#!/user/bin/env groovy
+
 def buildApp() {
     echo 'building the application...'
     echo "building version ${NEW_VERSION}"
