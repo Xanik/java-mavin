@@ -42,6 +42,7 @@ pipeline {
         stage("build image") {
             steps {
                 script {
+                    echo 'testing push config'
                     gv.buildImage()
                 }
             }
