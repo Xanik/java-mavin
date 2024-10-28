@@ -44,7 +44,7 @@ pipeline {
         stage("build image") {
             steps {
                 script {
-                    buildImage()
+                    buildImage 'xandra/demo-app:jma-3.0'
                 }
             }
         }
