@@ -45,6 +45,8 @@ pipeline {
             steps {
                 script {
                     buildImage 'xandra/demo-app:jma-3.0'
+                    dockerLogin()
+                    dockerPush 'xandra/demo-app:jma-3.0'
                 }
             }
         }
